@@ -7,7 +7,7 @@ services:
       context: .
       dockerfile: docker/offline-dqm/Dockerfile
       args:
-        USERID: 1000
+        USERID: ${USERID}
     image: kreczko/offline-dqm
     links:
       - dqm-gui
@@ -25,7 +25,7 @@ services:
       DISPLAY: ${DISPLAY}
       TERM: ${TERM}
       PROJECTPATH: /code/offline-dqm
-    # working_dir: /code/offline-dqm
+    working_dir: /code/offline-dqm
     privileged: true
     tty: true
     domainname: foo.bar
@@ -35,15 +35,13 @@ services:
     build:
       context: .
       dockerfile: docker/dqm-gui/Dockerfile
+      args:
+        USERID: ${USERID}
     image: kreczko/dqm-gui
     ports:
       - 8060:8060
     volumes:
-      - ${L1T_DEV_DIR}/external/deployment:/code
       - dqmgui-volume:/data/srv
-    environment:
-      - DQM_TAG=HG1610a
-      - INSTALL_DIR=/data/srv
     tty: true
     domainname: foo.bar
     hostname: dqm-gui
