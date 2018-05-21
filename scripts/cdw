@@ -1,7 +1,22 @@
 #!/bin/bash
+
+resize_term() {
+  old=$(stty -g)
+  stty raw -echo min 0 time 5
+
+  printf '\033[18t' > /dev/tty
+  IFS=';t' read -r _ rows cols _ < /dev/tty
+
+  stty "$old"
+
+  # echo "cols:$cols"
+  # echo "rows:$rows"
+  stty cols "$cols" rows "$rows"
+}
+
 source /cvmfs/cms.cern.ch/cmsset_default.sh
 source /scripts/setup_offline_dqm.sh
-cd /code
+cd ${PROJECTPATH}
 export NO_CVMFS=1
-stty rows 256 cols 256
+resize_term
 bash
