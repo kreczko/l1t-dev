@@ -72,5 +72,5 @@ TBD
 ### Uploading to DQM GUI
 
 ```bash
-./scripts/upload_to_dqm_gui.sh <file to upload>
+/scripts/upload_to_dqm_gui.sh <file to upload>
 ```
